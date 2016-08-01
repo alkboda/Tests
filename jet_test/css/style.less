@@ -1,0 +1,575 @@
+/* environments */
+@desktop:   ~"(min-width: 961px)";
+@tablet:    ~"(min-width: 401px) and (max-width: 960px)";
+@mobile:    ~"(max-width: 400px)";
+
+/* additional fonts */
+@font-face {
+    font-family: 'IcoMoon-Free';
+    src: url('./IcoMoon-Free.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "osc-bold";
+	src: url("./OpenSans-CondensedBold.ttf") format("truetype");
+	font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "osc-lite";
+	src: url("./OpenSans-CondensedLight.ttf") format("truetype");
+	font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "agency-bold";
+    font-style: normal;
+    font-weight: normal;
+    src: url("./AgencyFB-Bold.ttf") format("truetype");
+}
+
+/* variables */
+@main-bg-color: #676767;
+@dark-bg-color: #4b4b4b;
+
+/* cross-browser rules */
+.text-align-last(@align) {
+	text-align-last: @align;
+	-moz-text-align-last: @align;
+}
+.box-shadow(@x, @y, @radius, @tension, @color) {
+	box-shadow: @x @y @radius @tension @color;
+	-webkit-box-shadow: @x @y @radius @tension @color;
+	-moz-box-shadow: @x @y @radius @tension @color;
+	filter: progid:DXImageTransform.Microsoft.dropshadow(offX=@x, offY=@y, color=@color);
+}
+.box-shadow-inset(@x, @y, @radius, @tension, @color) {
+	box-shadow: inset @x @y @radius @tension @color;
+	-webkit-box-shadow: inset @x @y @radius @tension @color;
+	-moz-box-shadow: inset @x @y @radius @tension @color;
+	filter: progid:DXImageTransform.Microsoft.dropshadow(offX=@x, offY=@y, color=@color);
+}
+
+html, body {
+	width: 100%; height: 100%;
+	margin: 0; padding: 0;
+	background-color: @main-bg-color;
+}
+
+/* common classes */
+@media @tablet {
+	.desktop-only {
+		display: none;
+	}
+}
+@media @desktop {
+	.tablet-only, .mobile-only {
+		display: none;
+	}
+}
+
+.left {
+	display: inline-block;
+	float: left;
+	width: auto;
+}
+.right {
+	display: inline-block;
+	float: right;
+	width: auto;
+}
+
+.ch-eq-3 {
+	& > * {
+		box-sizing: border-box;
+		width: 33.3%;
+		text-align: center;
+	}
+}
+
+.horizontal-ul() {
+	display: inline-block;
+	
+	@media @tablet
+	{
+		margin: 0 35px;
+		
+		li {
+			display: block;
+		}
+	}
+	@media @desktop
+	{
+		margin: 0 40px;
+		
+		li {
+			display: inline-block;
+			float: left;
+		}
+	}
+}
+
+/* root styles */
+section {
+	display: block;
+	float: left;
+	width: 100%;
+	text-align: center;
+	
+	@media @mobile {
+		min-width: 380px;
+	}
+	
+	& > * {
+		max-width: 100%;
+	}
+	
+	& > ul {
+		.horizontal-ul();
+	}
+}
+
+h2 {
+	height: 1px;
+	margin-top: 76px; margin-bottom: 60px;
+	background-color: #000;
+	font-family: "osc-lite";
+	font-size: 33px;
+	line-height: 25px;
+	text-align: center;
+	text-transform: uppercase;
+	
+	& > * {
+		display: inline-block;
+		padding: 0 10px;
+		position: relative;
+		top: -12px;
+		background-color: @main-bg-color;
+	}
+}
+
+a, a:active, a:link, a:visited {
+	color: #fff;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #000;
+	transition: background 0.2s ease 0s, color 0.2s ease 0s;
+}
+
+ul {
+	margin: 0; padding: 0;
+	list-style: outside none none;
+}
+
+/* navigation styles for desktop+mobile environments */
+nav {
+	float: left;
+	width: 100%;
+	font-family: "osc-bold";
+	background-color: @dark-bg-color;
+	
+	/* mobile version has different main menu */
+	&.mobile-only {
+		color: #000;
+		background-color: #fff;
+		
+		.mobile-anchors() {
+			a > {
+				color: #000;
+			}
+			& > a:hover {
+				color: @main-bg-color;
+				transition: background 0.2s ease 0s, color 0.2s ease 0s;
+			}
+		}
+		.mobile-anchors();
+		
+		& > a {
+			display: block;
+			float: left;
+			height: 41px;
+			line-height: 41px;
+			
+		}
+		
+		ul {
+			li {
+				border: 0;
+				.mobile-anchors();
+			}
+		}
+		
+		/* button with dropped menu list */
+		#mobile-main-menu {
+			position: relative;
+			display: block;
+			float: left;
+			height: 41px;
+			width: 42px;
+			margin-right: 8px;
+			line-height: 41px;
+			z-index: 10; /* is needed cause slides cover this */
+			
+			color: #fff;
+			background-color: #000;
+			text-align:center;
+			cursor: pointer;
+			
+			ul {
+				position: absolute;
+				display: none;
+				float: left;
+				top:0; left: 42px;
+				opacity: 0;
+				
+				li {
+					display: block;
+					clear: both;
+					width: 120px;
+					border-width: 0 0 1px;
+					border-style: solid;
+					border-color: #000;
+					
+					background-color: @dark-bg-color;
+				}
+			}
+		}
+	}
+	
+	/* common navigation styles for all environments */
+	ul {
+		width: 100%;
+		text-transform: uppercase;
+		
+		li:last-child {
+			border-width: 0;
+		}
+		li {
+			display: inline-block; float: left;
+			line-height: 41px;
+			border-width: 0 1px 0 0;
+			border-style: solid;
+			
+			&.current {
+				background-color: @main-bg-color;
+			}
+			
+			a {
+				display: inline-block;
+				box-sizing: border-box;
+				width: 100%; height: 100%;
+				margin: 0; padding: 0 10px;
+				
+				span {
+					margin-left: 10px;
+				}
+			}
+		}
+	}
+}
+
+/* div with few images for css3-slideshow */
+#slides {
+	position: relative;
+	overflow: hidden;
+	white-space: nowrap;
+	z-index: 1; /* is needed cause otherwise will covering mobile dropdown menu */
+	
+	/*
+		main animation rule
+		depends on total count of images, is needed for timings calculating
+		@cnt is number of current image count (1-based index)
+	*/
+	@animation-duration: 5s;
+	.flash(@cnt, @total) {		
+		-webkit-animation-name: flash;
+		-webkit-animation-delay: (@cnt - 1) * @animation-duration;
+		-webkit-animation-duration: @animation-duration * @total;
+		
+		-moz-animation-name: flash;
+		-moz-animation-delay: (@cnt - 1) * @animation-duration;
+		-moz-animation-duration: @animation-duration * @total;
+		
+		-o-animation-name: flash;
+		-o-animation-delay: (@cnt - 1) * @animation-duration;
+		-o-animation-duration: @animation-duration * @total;
+		
+		animation-name: flash;
+		animation-delay: (@cnt - 1) * @animation-duration;
+		animation-duration: @animation-duration * @total;
+		animation-iteration-count: infinite;
+	}
+	
+	/* hiding second+ images behind first image */
+	& > img:first-child {
+		position: relative;
+	}
+	
+	& > img {
+		position: absolute;
+		display: block;
+		left: 0; top: 0;
+		
+		opacity: 0;
+	}
+	 
+	 /* recursion loop that's generating each slide rule */
+	.slide-all(@total-slides) {
+		.loop(@counter) when (@counter > 0) {
+			.loop((@counter - 1));
+			
+			& > img:nth-child(@{counter}) {
+				.flash(@counter, @total-slides);
+			}
+		}
+		
+		/* 3 percents for more smooth sliding */
+		@per-percent: 100% / @total-slides;
+		@percent1: 10% + @per-percent / 10;
+		@percent2: 10% + 9 * @per-percent / 10;
+		@percent3: 10% + @per-percent;
+		@keyframes flash {
+			0%, 10% {opacity: 0;}
+			@{percent1} {opacity: 1;}
+			@{percent2} {opacity: 1;}
+			@{percent3}, 100% {opacity: 0;}
+		}
+		
+		.loop(@total-slides);
+	}
+	.slide-all(3);
+}
+
+/* primary block with few tabs with text content */
+#main-content {
+	@font-size: 17px;
+	@line-height: @font-size + 8px;
+	@big-letter-size: @line-height * 3;
+	
+	/* rules for switching tabs */
+	position: relative;
+	overflow: hidden;
+	white-space: nowrap;
+	z-index: 1; /* is needed cause otherwise will covering mobile dropdown menu */
+	
+	@media @mobile {
+		margin: 20px auto;
+		width: 96%;
+	}
+	@media @tablet {
+		margin: 30px auto;
+		width: 90%;
+	}
+	@media @desktop {
+		margin: 70px auto;
+		width: 57%;
+	}
+	
+	p:first-child {
+		position: relative;
+	}
+	p {
+		position: absolute;
+		left: 0; top: 0;
+		display: inline-block;
+		width: 100%;
+		margin: 0;
+		opacity: 0;
+		
+		font-family: "osc-lite";
+		font-size: @font-size;
+		line-height: @line-height;
+		color: #fff;
+		text-align: justify; .text-align-last(center);
+		white-space: normal;
+		
+		/* big first letter that cover few lines of common text */
+		&::first-letter {
+			margin: 0 20px;
+			margin-top: @line-height / 2;
+			height: @big-letter-size;
+			font-size: @big-letter-size;
+			line-height: @big-letter-size;
+			position:relative;
+			float:left;
+			display:block;
+		}
+	}
+}
+
+/* series of social links */
+#socials {
+	margin-bottom: 45px;
+	text-align: center;
+	font-size: 24px;
+	
+	& > * {
+		@media @mobile {
+			margin: 0 10px;
+		}
+		@media @tablet {
+			margin: 0 15px;
+		}
+		@media @desktop {
+			margin: 0 18px;
+		}
+		display: inline-block;
+	}
+}
+
+/* some people in circles here */
+#users {
+	text-align: center;
+	
+	ul {
+		display: inline-block;
+		
+		li {
+			@figure-radius: 62px;
+			position: relative;
+			float: left;
+			height: @figure-radius * 2 + 50px;
+			
+			.figure(@radius) {
+				width: @radius * 2; height: @radius * 2;
+				margin: 15px; padding: 0;
+				box-sizing: border-box;
+				border-radius: @radius;
+				overflow: hidden;
+			}
+			
+			figure {
+				.figure(@figure-radius);
+				
+				& > figcaption {
+					position: absolute;
+					width: @figure-radius * 2;
+					bottom: 0;
+					
+					font-family: "osc-lite";
+					font-size: 16px;
+					color: #fff;
+					text-transform: uppercase;
+					text-align: center;
+				}
+				
+				/* strange, but inner shadow doesn't work on main block that holds image */
+				& > .shadow {
+					.figure(@figure-radius);
+					
+					position: absolute;
+					display: block;
+					margin: 0;
+					.box-shadow-inset(0,0,3px,0,#000);
+					background-color: transparent;
+				}
+			}
+			
+			/* circle with texted link and dashed circle around. in FF dashed&dotted border style won't work on rounded borders */
+			#join-team {
+				@join-radius: @figure-radius - 2px; /* took less radius for dashed circle around */
+				.figure(@join-radius);
+				margin: 19px;
+				
+				display: block;
+				box-sizing: border-box;
+				padding: 0 10px;
+				padding-top: @join-radius * 2 / 5; padding-bottom: @join-radius * 2 / 5; /* little shift text within */
+				
+				color: #b6b6b6;
+				background-color: #000;
+				
+				line-height: @join-radius * 2 / 5;
+				font-family: "agency-bold";
+				font-size: 20px;
+				text-align: center;
+				text-transform: uppercase;
+				
+				/* dashed circle */
+				& > .border {
+					.figure(@figure-radius);
+					position: absolute;
+					display: block;
+					margin-top: -1 * @join-radius * 2 / 5 - 2px; /* parents position's static - move with margins */
+					margin-left: -12px;
+					
+					border-width: 1px; border-style: dashed; border-color: #000;
+				}
+			}
+		}
+	}
+}
+
+/* common list. height is set in cause when second line is attached */
+#partners {
+	ul {
+		li {
+			height: 95px;
+			
+			@media @tablet {
+				margin: 40px 0;
+			}
+			@media @desktop {
+				margin: 20px 18px;
+			}
+		}
+	}
+}
+
+/* common list. height is set in cause when second line is attached */
+#clients {
+	margin-bottom: 60px;
+	
+	ul {
+		li {
+			height: 100px;
+			
+			@media @tablet {
+				margin: 60px 0;
+			}
+			@media @desktop {
+				margin: 20px 35px;
+			}
+		}
+	}
+}
+
+footer {
+	font-family: "agency-bold";
+	font-size: 15px;
+	line-height: 22px;
+	text-align: center;
+	
+	& > *:last-child {
+		display: block;
+		margin-bottom: 20px;
+	}
+}
+
+/* importing IcoMoon for free icon font*/
+.icon {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'IcoMoon-Free' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    
+    /* Enable Ligatures ================ */
+    letter-spacing: 0;
+    -webkit-font-feature-settings: "liga";
+    -moz-font-feature-settings: "liga=1";
+    -moz-font-feature-settings: "liga";
+    -ms-font-feature-settings: "liga" 1;
+    -o-font-feature-settings: "liga";
+    font-feature-settings: "liga";
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
