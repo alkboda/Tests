@@ -18,7 +18,7 @@ namespace TextProcessor.Processing.Processors
             }
             if (!typeof(ACsv).IsAssignableFrom(typeof(TEntity)))
             {
-                throw new ArgumentException("CsvProcessor accepts only ACsv types", nameof(TEntity));
+                throw new ArgumentException($"{nameof(CsvProcessor)} accepts only {nameof(ACsv)} types", nameof(TEntity));
             }
 
             if (!File.Exists(fileName))
@@ -44,14 +44,14 @@ namespace TextProcessor.Processing.Processors
             var parts = csvString.Split(new[] { result.FieldDelimeter }, StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length != result.FieldCount)
             {
-                throw new ArgumentException("Invalid fields count within city declaration.");
+                throw new ArgumentException($"Invalid fields count within {typeof(TEntity).Name} declaration.");
             }
 
             var properties = typeof(TEntity).GetProperties(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public)
                 .Where(_ => _.GetCustomAttributes<CsvFieldAttribute>(true)?.Any() ?? false);
             if (!properties.Any())
             {
-                throw new Exception($"Type {typeof(TEntity).Name} doesn't contain any CsvField attributes");
+                throw new Exception($"Type {typeof(TEntity).Name} doesn't contain any {nameof(CsvFieldAttribute)} attributes");
             }
 
             var attributesData = new Dictionary<CsvFieldAttribute, PropertyInfo>();
