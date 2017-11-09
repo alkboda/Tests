@@ -37,16 +37,15 @@ namespace NumberWorder
                         : $"{ch}"            // Simply put incorrect symbol to output and skip to next symbol
                 );
             }
-            Console.WriteLine();
 
             var correctInput = new System.Text.RegularExpressions.Regex(@"^[0-9]+$").IsMatch(possiblyNumber);
             if (!correctInput)
             {
                 Console.WriteLine();
+                Console.WriteLine();
                 Console.WriteLine("There was put incorrect symbols to the input. Please be more careful next time.");
+                Console.ReadKey();
             }
-            Console.ReadKey();
-            return;
         }
     }
 }
